@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginAuthApiRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\User\user as UserResource;
 
 class AuthController extends Controller
 {
@@ -19,6 +20,11 @@ class AuthController extends Controller
             ]);
         }
 
-        $accessToken = Auth::user();
+        $accessToken = Auth::createToken('accessToken');
+
+        return response([
+            'user' => UserResource::make(Auth::user()),
+            'accessToken' => $accessToken
+        ] , 200);
     }
 }
