@@ -14,16 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::group([
-    'perfix' => 'api',
-    'middelware' => 'auth:api',
-    'namespace' => 'APi/Auth'
+    'namespace' => 'Api\Auth'
 ], function () {
-    Route::get('/login' , 'AuthController@login')->name('auth.login.api');
+    Route::post('/login' , 'AuthController@login')->name('auth.login.api');
+});
+
+Route::get('/se', function () {
+    return 'he';
 });
 
 Route::fallback(function() {

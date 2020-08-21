@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function Login(LoginAuthApiRequest $request)
     {
-        if (!Auth::attempt($request))
+        if (!Auth::attempt($request->only(['email' , 'password'])))
         {
             return response([
                 'message' => 'Invalid password or email address' , 
@@ -20,7 +20,7 @@ class AuthController extends Controller
             ]);
         }
 
-        $accessToken = Auth::createToken('accessToken');
+        $accessToken = auth()->user()->createToken('accesstoken')->accessToken;
 
         return response([
             'user' => UserResource::make(Auth::user()),
