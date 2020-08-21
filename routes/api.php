@@ -24,6 +24,13 @@ Route::group([
     Route::post('/login' , 'AuthController@login')->name('auth.login.api');
 });
 
+Route::group([
+    'namespace' => 'Api\Customers' ,
+    'middelware' => 'auth' ,
+], function () {
+    Route::apiResource('/customer' , 'CustomerController');
+});
+
 
 Route::fallback(function() {
     return response('page not found' , 404);
