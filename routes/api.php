@@ -24,9 +24,6 @@ Route::group([
     Route::post('/login' , 'AuthController@login')->name('auth.login.api');
 });
 
-Route::get('/se', function () {
-    return 'he';
-});
 
 Route::fallback(function() {
     return response('page not found' , 404);
