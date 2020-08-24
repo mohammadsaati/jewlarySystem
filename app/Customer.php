@@ -39,11 +39,6 @@ class Customer extends Model
         $this->save();
     }
 
-    public function scopeUserCustomer($query)
-    {
-        return $query->where('user_id', auth()->id())->get();
-    }
-
     public function scopeFilter($query , $filters)
     {
         if (!empty($filters))
