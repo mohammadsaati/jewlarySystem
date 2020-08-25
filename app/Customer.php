@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Http\Requests\Customers\CustomerRequest;
+
 
 class Customer extends Model
 {
@@ -28,23 +30,27 @@ class Customer extends Model
         }
     }
 
-    function addDate(Request $request)
+    function addDate(CustomerRequest $request)
     {
-        $isValid = $request->validate([
-            'userName' => 'required|min:4',
-            'phoneNumber' => 'required|min:11'
-        ]);
-        if ($isValid) {
-            $this->userName = $request->userName;
-            $this->phoneNumber = $request->phoneNumber;
-            $this->user_id = auth()->id();
-            $this->save();
+    
+        $this->userName = $request->userName;
+        $this->phoneNumber = $request->phoneNumber;
+        $this->user_id = $request->auth_id;
+        $this->save();
+    }
+
+    public function scopeFilter($query , $filters)
+    {
+        if (!empty($filters))
+        {
+            if (!empty($filters['userName']))
+            {
+                $query->where('userName' , $filters['userName']);
+            }
+            if ($filters['user_id'])
+            {
+                 $query->where('user_id' , $filters['user_id']);
+            }
         }
     }
-
-    public function scopeUserCustomer($query)
-    {
-        return $query->where('user_id', auth()->id())->get();
-    }
-
 }
