@@ -15,10 +15,7 @@ class CustomerController extends Controller
 
     public function index(Request $request)
     {
-        $p = ['userName' => '87' , 'p' => '10'];
-
         $filters = Arr::only($request->filters , $this->filterable);
-        
         
         return CustomerResource::collection(Customer::filter($filters)->get());
     }
@@ -27,5 +24,34 @@ class CustomerController extends Controller
        $customer = new Customer();
        $customer->addDate($request);
        return CustomerResource::make($customer);
+    }
+
+    public function show(Customer $customer)
+    {
+        return CustomerResource::make($customer);
+    }
+
+    public function update(Customer $customer , Request $request)
+    {
+       $isupdated = $customer->update(Arr::only($request->all() , $customer->getFillable()));
+
+       if ($isupdated)
+       {
+            return response(
+                'customer.update.succsfull',
+            200);
+       }
+    }
+
+    public function destroy(Customer $customer)
+    {
+        $isDeleted = $customer->delete();
+
+        if ($isDeleted)
+        {
+            return response(
+                'custommer.delete.successful',
+            200);
+        }
     }
 }
