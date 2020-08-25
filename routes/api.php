@@ -26,7 +26,7 @@ Route::group([
 
 Route::group([
     'namespace' => 'Api\Customers' ,
-    'middelware' => 'auth' ,
+    'middleware' => 'auth:api' ,
 ], function () {
     Route::apiResource('/customer' , 'CustomerController');
 });
