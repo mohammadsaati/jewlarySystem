@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Requests\Products\TempProductRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -19,30 +20,22 @@ class Temp extends Model
 
         return $total;
     }
-    
-    public function addData(Request $request)
+
+    public function scopeFilter($query, $user_id)
     {
-        $validation = $request->validate([
-            'weight' => 'required',
-            'ayar' => 'required',
-            'fi' => 'required',
-            'price' => 'required',
-            'productInfo' => 'required',
-            'type'=> 'required'
-        ]);
-        
-        if ($validation && $request->customer != '...') {
-            if (!session()->exists('customerID')) {
-                session(['customerID' => $request->customer]);
-            }
-    
-            $this->weight = $request->weight;
-            $this->ayar = $request->ayar;
-            $this->fi = $request->fi;
-            $this->price = $request->price;
-            $this->productInfo = $request->productInfo;
-            $this->type = $request->type;
-            $this->save();
-        }
+        $query->where('user_id', $user_id);
+    }
+
+    public function addData(TempProductRequest $request)
+    {
+
+        $this->weight = $request->weight;
+        $this->ayar = $request->ayar;
+        $this->fi = $request->fi;
+        $this->price = $request->price;
+        $this->product_info = $request->product_info;
+        $this->type = $request->type;
+        $this->user_id = $request->user_id;
+        $this->save();
     }
 }

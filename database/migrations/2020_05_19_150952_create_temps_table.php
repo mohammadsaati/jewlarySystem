@@ -15,13 +15,18 @@ class CreateTempsTable extends Migration
     {
         Schema::create('temps', function (Blueprint $table) {
             $table->id();
-            $table->string('weight');
-            $table->string('ayar');
-            $table->string('fi');
-            $table->string('price');
-            $table->text('productInfo');
+            $table->unsignedBigInteger('user_id');
+            $table->integer('weight');
+            $table->integer('ayar');
+            $table->integer('fi');
+            $table->integer('price');
+            $table->text('product_info');
             $table->string('type');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
         });
     }
 

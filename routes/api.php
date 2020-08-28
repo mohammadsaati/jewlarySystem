@@ -31,6 +31,14 @@ Route::group([
     Route::apiResource('/customer' , 'CustomerController');
 });
 
+Route::group([
+    'namespace' => 'Api\Products' ,
+    'middleware' => 'auth:api' ,
+], function () {
+    Route::apiResource('/temp' , 'TempProductController');
+    Route::get('/temp/delete/all' , 'TempProductController@deleteAll');
+});
+
 
 Route::fallback(function() {
     return response('page not found' , 404);
