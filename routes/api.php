@@ -37,6 +37,7 @@ Route::group([
 ], function () {
     Route::apiResource('/temp' , 'TempProductController');
     Route::get('/temp/delete/all' , 'TempProductController@deleteAll');
+    Route::apiResource('/product' , 'ProductController');
 });
 
 
