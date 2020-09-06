@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@mainPage')->name('main-page');
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('customer', 'CustomerController');
-Route::post('/product/saveTemp', 'InvoiceController@storeTemprary')->name('product.temp');
-Route::delete('/product/temp/{temp}', 'InvoiceController@deleteTemprary')->name('product.deleteTemp');
-Route::get('/confirm-invoice' , 'PaymentController@show')->name('payment.pay');
+//Route::resource('customer', 'CustomerController');
+//Route::post('/product/saveTemp', 'InvoiceController@storeTemprary')->name('product.temp');
+//Route::delete('/product/temp/{temp}', 'InvoiceController@deleteTemprary')->name('product.deleteTemp');
+//Route::get('/confirm-invoice' , 'PaymentController@show')->name('payment.pay');
 Route::post('/pay' , 'PaymentController@store')->name('payment.store');
 Route::get('/invoice/extrapay/{invoice}' , 'PaymentController@extraShow')->name('payment.extraShow');
 Route::post('/invoice/extrapay/{invoice}/pay' , 'PaymentController@extraPay')->name('payment.extraPay');
